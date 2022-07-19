@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
 import numpy as np
+import cv2
 
 
 class FactorApp(tk.Tk):
@@ -181,3 +182,20 @@ class ObfuscationApp(tk.Tk):
 
     def get_file_path(self):
         return self.file_path
+
+# https://stackoverflow.com/questions/35180764/opencv-python-image-too-big-to-display
+
+def ResizeWithAspectRatio(image, width=None, height=None, inter=cv2.INTER_AREA):
+    dim = None
+    (h, w) = image.shape[:2]
+
+    if width is None and height is None:
+        return image
+    if width is None:
+        r = height / float(h)
+        dim = (int(w * r), height)
+    else:
+        r = width / float(w)
+        dim = (width, int(h * r))
+
+    return cv2.resize(image, dim, interpolation=inter)

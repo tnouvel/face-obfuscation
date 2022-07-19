@@ -54,7 +54,8 @@ def main(argv):
         else:
             base = os.path.basename(file_path)
             img_name = os.path.splitext(base)[0] + "_obf.jpg"
-            cv2.imshow(img_name, img)
+            resize = ResizeWithAspectRatio(img, width=640)
+            cv2.imshow(img_name, resize)
             cv2.waitKey()
             cv2.destroyAllWindows()
 
