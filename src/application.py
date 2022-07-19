@@ -1,4 +1,5 @@
-import sys, os
+import sys
+import os
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog
@@ -15,16 +16,15 @@ class FactorApp(tk.Tk):
         self.label = Label(self, text='Choose a factor for obfuscation:')
         self.label.pack()
 
-        self.entry=Entry(self, width=35)
+        self.entry = Entry(self, width=35)
         self.entry.focus_set()
         self.entry.pack()
 
-        self.button = Button(self, text='Confirm', 
-                      command=lambda:[self.get_value(), self.destroy()])
+        self.button = Button(self, text='Confirm',
+                             command=lambda: [self.get_value(), self.destroy()])
         self.button.pack()
 
         self.factor = 0
-
 
     def get_value(self):
         self.factor = self.entry.get()
@@ -40,9 +40,10 @@ class FileApp(tk.Tk):
         self.title('Open Video')
         self.geometry('400x200')
         # Creating a button to search the file
-        b1 = Button(self, text = "Open File", command=lambda:[self.open_file(), self.show_file_path()])
+        b1 = Button(self, text="Open File", command=lambda: [
+                    self.open_file(), self.show_file_path()])
         b1.pack()
-        
+
         self.labelA = tk.Label(self, text="", wraplength=350, justify=LEFT)
         self.labelA.pack()
 
@@ -59,9 +60,9 @@ class FileApp(tk.Tk):
             ('jpg files', '*.jpg')
         )
         # Open and return file path
-        self.file_path= filedialog.askopenfilename(title = "Select A File", 
-                        filetypes = filetypes)
-    
+        self.file_path = filedialog.askopenfilename(title="Select A File",
+                                                    filetypes=filetypes)
+
     def show_file_path(self):
         self.labelA['text'] = "Filepath: " + self.file_path
 
@@ -74,13 +75,10 @@ class OptionApp(tk.Tk):
         super().__init__()
 
         self.choice = ''
-        
 
         self.title('Obfuscation Options')
         self.geometry('300x100')
 
-
-        
         self.label = Label(self, text='Choose type of obfuscation:')
         self.label.pack()
 
@@ -89,18 +87,13 @@ class OptionApp(tk.Tk):
         self.option = StringVar(self)
         self.option.set("Select a method")
 
-        self.menu = OptionMenu(self, self.option, *self.options_list, 
-                                command=self.select_option)
+        self.menu = OptionMenu(self, self.option, *self.options_list,
+                               command=self.select_option)
         self.menu.pack()
 
-
-        
-
-
-        self.button = Button(self, text='Confirm', 
-                            command=lambda:[self.destroy()])
+        self.button = Button(self, text='Confirm',
+                             command=lambda: [self.destroy()])
         self.button.pack()
-
 
     def select_option(self, value):
         self.choice = value
@@ -121,42 +114,38 @@ class ObfuscationApp(tk.Tk):
         self.geometry('500x300')
 
         # Creating a button to search the file
-        b1 = Button(self, text = "Open File", command=lambda:[self.open_file(), self.show_file_path()])
+        b1 = Button(self, text="Open File", command=lambda: [
+                    self.open_file(), self.show_file_path()])
         b1.pack()
-        #Display file path
+        # Display file path
         self.labelA = tk.Label(self, text="", wraplength=350, justify=LEFT)
         self.labelA.pack()
 
-        #Option of blur or pixelate
+        # Option of blur or pixelate
         self.label = Label(self, text='Choose type of obfuscation:')
         self.label.pack()
         self.options_list = ["Blur", "Pixelate"]
         self.option = StringVar(self)
         self.option.set("Select a method")
-        self.menu = OptionMenu(self, self.option, *self.options_list, 
-                                command=self.select_option)
+        self.menu = OptionMenu(self, self.option, *self.options_list,
+                               command=self.select_option)
         self.menu.pack()
 
-
-        #Factor of obfuscation (level of blurring or pixelation)
+        # Factor of obfuscation (level of blurring or pixelation)
         self.label = Label(self, text='Choose a factor for obfuscation:')
         self.label.pack()
-        self.entry=Entry(self, width=35)
+        self.entry = Entry(self, width=35)
         self.entry.focus_set()
         self.entry.pack()
 
-        #Save output
+        # Save output
         self.cb_save = IntVar()
-        self.cb = Checkbutton(self, text='Save Output', variable = self.cb_save, 
-            onvalue=1, offvalue = 0, height=5, width=20).pack()
-        
+        self.cb = Checkbutton(self, text='Save Output', variable=self.cb_save,
+                              onvalue=1, offvalue=0, height=5, width=20).pack()
 
-    
-
-        self.button = Button(self, text='Confirm', 
-                      command=lambda:[self.get_value(), self.destroy()])
+        self.button = Button(self, text='Confirm',
+                             command=lambda: [self.get_value(), self.destroy()])
         self.button.pack()
-   
 
     def open_file(self):
 
@@ -166,15 +155,15 @@ class ObfuscationApp(tk.Tk):
             ('jpg files', '*.jpg')
         )
         # Open and return file path
-        self.file_path= filedialog.askopenfilename(title = "Select A File", 
-                        filetypes = filetypes)
+        self.file_path = filedialog.askopenfilename(title="Select A File",
+                                                    filetypes=filetypes)
 
     def select_option(self, value):
         self.choice = value
 
-    #def save_value(self):
+    # def save_value(self):
         #self.cb_save = self.cb.get()
-    
+
     def get_save_output(self):
         return self.cb_save.get()
 
@@ -192,5 +181,3 @@ class ObfuscationApp(tk.Tk):
 
     def get_file_path(self):
         return self.file_path
-    
-    
