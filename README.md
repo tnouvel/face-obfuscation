@@ -119,3 +119,7 @@ laying images over the face. Snapchat is a good example of this.
 7. Caffe Framework: <https://caffe.berkeleyvision.org>
 8. Face Detection with OpenCV and Deep Learning: <https://pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning>
 9. Smoothing Images: <https://pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning>
+
+
+### NOTE:
+This was done as a project for school. It is not for commercial use. Contact me about any inquries or other questions.
