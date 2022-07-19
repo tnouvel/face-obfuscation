@@ -76,12 +76,16 @@ region of interest with a Gaussian kernel [9]. The sum of the con-
 volutions is returned to the frame over the face. Thus, the face is
 blurred. OpenCV has implemented this function.
 
+![image](https://user-images.githubusercontent.com/105947562/179640488-aeab8b88-1bfc-49ff-9f34-6ae1bf3e70a6.png)
+
 ### Pixelation
 
 In order to pixelate the face, the region of interest must be deter-
 mined. The user defines a number of "blocks" to be displays over
 the face. Then, the mean RGB values of each block are calculated
 and placed in a rectangle. This occurs in the x and y direction.
+
+![image](https://user-images.githubusercontent.com/105947562/179640528-d28110d9-a24d-4985-90b7-e57ec1754cd3.png)
 
 ## Results
 
