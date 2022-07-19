@@ -25,8 +25,6 @@ def main(argv):
     proto_path = join(dirname(__file__), "weights/deploy.prototxt")
     model_path = join(dirname(__file__),
                       "weights/res10_300x300_ssd_iter_140000_fp16.caffemodel")
-    #proto_path = "/weights/deploy.prototxt"
-    #model_path = "weights/res10_300x300_ssd_iter_140000_fp16.caffemodel"
 
     # create model from neural info
     model = cv2.dnn.readNetFromCaffe(proto_path, model_path)
