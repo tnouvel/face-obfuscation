@@ -1,4 +1,4 @@
-Face Obfuscation
+# face-obfuscation
 
 Facial recognition is a concept first pioneered in the 1960s . Woody
 Bledsoe, Helen Chan Wolf and Charles Bisson attempted to detect
