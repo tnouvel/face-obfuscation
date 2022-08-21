@@ -6,6 +6,7 @@ from tkinter import filedialog
 import numpy as np
 import cv2
 
+
 class ObfuscationApp(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -16,8 +17,9 @@ class ObfuscationApp(tk.Tk):
 
         self.title('Obfuscation Options')
         self.geometry('500x300')
+        self.minsize(500, 300)
         icon_path = join(dirname(__file__),
-                      "ui/images/window_icon.png")
+                         "ui/images/window_icon.png")
         self.tk.call('wm', 'iconphoto', self._w, tk.PhotoImage(file=icon_path))
 
         # Creating a button to search the file
@@ -29,8 +31,8 @@ class ObfuscationApp(tk.Tk):
         self.labelA.pack()
 
         # Option of blur or pixelate
-        self.label = Label(self, text='Choose type of obfuscation:')
-        self.label.pack()
+        self.method_label = Label(self, text='Choose type of obfuscation:')
+        self.method_label.pack()
         self.options_list = ["Blur", "Pixelate"]
         self.option = StringVar(self)
         self.option.set("Select a method")
@@ -39,8 +41,8 @@ class ObfuscationApp(tk.Tk):
         self.menu.pack()
 
         # Factor of obfuscation (level of blurring or pixelation)
-        self.label = Label(self, text='Choose a factor for obfuscation:')
-        self.label.pack()
+        self.factor_label = Label(self, text='Choose a factor for obfuscation:')
+        self.factor_label.pack()
         self.entry = Entry(self, width=35)
         self.entry.focus_set()
         self.entry.pack()
@@ -90,6 +92,7 @@ class ObfuscationApp(tk.Tk):
         return self.file_path
 
 # https://stackoverflow.com/questions/35180764/opencv-python-image-too-big-to-display
+
 
 def ResizeWithAspectRatio(image, width=None, height=None, inter=cv2.INTER_AREA):
     dim = None
