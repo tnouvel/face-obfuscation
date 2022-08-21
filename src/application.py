@@ -1,8 +1,9 @@
 import sys
 from os.path import dirname, join
 import tkinter as tk
-from tkinter import *
-from tkinter import filedialog
+from tkinter import PhotoImage, filedialog, Label, StringVar, OptionMenu, Entry, IntVar, Checkbutton, Canvas
+from tkinter.ttk import Style, Button
+from PIL import Image, ImageTk
 import numpy as np
 import cv2
 
@@ -10,11 +11,35 @@ import cv2
 class ObfuscationApp(tk.Tk):
     def __init__(self):
         super().__init__()
+        self.create_widgets()
 
         self.choice = ''
         self.file_path = ''
         self.factor = 0
 
+        # Styles
+        # Buttons
+        style = Style()
+        style.configure('Open.TButton', font=(
+            'calibri', 10, 'bold'), foreground='blue')
+        style.configure('Conf.TButton', font=(
+            'calibri', 10, 'bold'), foreground='green')
+
+    def create_widgets(self):
+        self.create_window()
+        self.open_file_button()
+        self.obfuscation_options()
+
+        # Save output
+        self.cb_save = IntVar()
+        self.cb = Checkbutton(self, text='Save Output', variable=self.cb_save,
+                              onvalue=1, offvalue=0, height=5, width=20).pack()
+        # Confirm
+        self.button = Button(self, text='Confirm', style='Conf.TButton',
+                             command=lambda: [self.get_value(), self.destroy()])
+        self.button.pack()
+
+    def create_window(self):
         self.title('Obfuscation Options')
         self.geometry('500x300')
         self.minsize(500, 300)
@@ -22,39 +47,14 @@ class ObfuscationApp(tk.Tk):
                          "ui/images/window_icon.png")
         self.tk.call('wm', 'iconphoto', self._w, tk.PhotoImage(file=icon_path))
 
+    def open_file_button(self):
         # Creating a button to search the file
-        b1 = Button(self, text="Open File", command=lambda: [
+        b1 = Button(self, text="Open File", style='Open.TButton', command=lambda: [
                     self.open_file(), self.show_file_path()])
-        b1.pack()
+        b1.pack(pady=(25, 0))
         # Display file path
-        self.labelA = tk.Label(self, text="", wraplength=350, justify=LEFT)
+        self.labelA = tk.Label(self, text="", wraplength=350)
         self.labelA.pack()
-
-        # Option of blur or pixelate
-        self.method_label = Label(self, text='Choose type of obfuscation:')
-        self.method_label.pack()
-        self.options_list = ["Blur", "Pixelate"]
-        self.option = StringVar(self)
-        self.option.set("Select a method")
-        self.menu = OptionMenu(self, self.option, *self.options_list,
-                               command=self.select_option)
-        self.menu.pack()
-
-        # Factor of obfuscation (level of blurring or pixelation)
-        self.factor_label = Label(self, text='Choose a factor for obfuscation:')
-        self.factor_label.pack()
-        self.entry = Entry(self, width=35)
-        self.entry.focus_set()
-        self.entry.pack()
-
-        # Save output
-        self.cb_save = IntVar()
-        self.cb = Checkbutton(self, text='Save Output', variable=self.cb_save,
-                              onvalue=1, offvalue=0, height=5, width=20).pack()
-
-        self.button = Button(self, text='Confirm',
-                             command=lambda: [self.get_value(), self.destroy()])
-        self.button.pack()
 
     def open_file(self):
 
@@ -66,6 +66,34 @@ class ObfuscationApp(tk.Tk):
         # Open and return file path
         self.file_path = filedialog.askopenfilename(title="Select A File",
                                                     filetypes=filetypes)
+        # if self.file_path:
+        #     image = Image.open(self.file_path)
+
+        #     #canvas = Canvas(self, width=100, height=100, bg="grey")
+        #     # canvas.pack()
+        #     print(image)
+
+        #     image_tk = ImageTk.PhotoImage(image)
+        #     self.display = Label(image=image_tk).pack()
+
+    def obfuscation_options(self):
+        # Option of blur or pixelate
+        self.method_label = Label(self, text='Choose type of obfuscation:')
+        self.method_label.pack()
+        self.options_list = ["Blur", "Pixelate"]
+        self.option = StringVar(self)
+        self.option.set("Select a method")
+        self.menu = OptionMenu(self, self.option, *self.options_list,
+                               command=self.select_option)
+        self.menu.pack()
+
+        # Factor of obfuscation (level of blurring or pixelation)
+        self.factor_label = Label(
+            self, text='Choose a factor for obfuscation:')
+        self.factor_label.pack()
+        self.entry = Entry(self, width=35)
+        self.entry.focus_set()
+        self.entry.pack()
 
     def select_option(self, value):
         self.choice = value
