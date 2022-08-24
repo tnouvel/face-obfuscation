@@ -1,5 +1,5 @@
 from constants import IMAGE_SIZE
-
+import os
 from os.path import dirname, join
 import tkinter as tk
 from tkinter import PhotoImage, filedialog, Label, StringVar, OptionMenu, Entry, IntVar, Checkbutton, Frame
@@ -110,15 +110,16 @@ class ObfuscationApp(tk.Tk):
     def show_file_path(self):
         self.labelA['text'] = "Filepath: " + self.file_path
         
-        im = Image.open(self.file_path)
-        im.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
-        tkimage = ImageTk.PhotoImage(im)
         if self.thumbnail:
             self.thumbnail.destroy()
-        self.thumbnail=Label(self.fileFrame, image = tkimage)
-        self.thumbnail.image = tkimage
-        self.thumbnail.configure(image = tkimage)
-        self.thumbnail.pack()
+        if os.path.splitext(self.file_path)[1] == ".jpg":
+            im = Image.open(self.file_path)
+            im.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
+            tkimage = ImageTk.PhotoImage(im)
+            self.thumbnail=Label(self.fileFrame, image = tkimage)
+            self.thumbnail.image = tkimage
+            self.thumbnail.configure(image = tkimage)
+            self.thumbnail.pack()
         
     
 
