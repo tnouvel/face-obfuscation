@@ -1,11 +1,13 @@
-import sys
+from constants import IMAGE_SIZE
+
 from os.path import dirname, join
 import tkinter as tk
-from tkinter import PhotoImage, filedialog, Label, StringVar, OptionMenu, Entry, IntVar, Checkbutton, Canvas
+from tkinter import PhotoImage, filedialog, Label, StringVar, OptionMenu, Entry, IntVar, Checkbutton, Frame
 from tkinter.ttk import Style, Button
 from PIL import Image, ImageTk
 import numpy as np
 import cv2
+
 
 
 class ObfuscationApp(tk.Tk):
@@ -16,6 +18,7 @@ class ObfuscationApp(tk.Tk):
         self.choice = ''
         self.file_path = ''
         self.factor = 0
+        self.thumbnail = None
 
         # Styles
         # Buttons
@@ -48,12 +51,15 @@ class ObfuscationApp(tk.Tk):
         self.tk.call('wm', 'iconphoto', self._w, tk.PhotoImage(file=icon_path))
 
     def open_file_button(self):
+        self.fileFrame = Frame(self)
+        self.fileFrame.pack()
         # Creating a button to search the file
-        b1 = Button(self, text="Open File", style='Open.TButton', command=lambda: [
-                    self.open_file(), self.show_file_path()])
+        # b1 = Button(self.fileFrame, text="Open File", style='Open.TButton', command=lambda: [
+        #             self.open_file(), self.show_file_path()])
+        b1 = Button(self.fileFrame, text="Open File", style='Open.TButton', command=self.open_file)
         b1.pack(pady=(25, 0))
         # Display file path
-        self.labelA = tk.Label(self, text="", wraplength=350)
+        self.labelA = tk.Label(self.fileFrame, text="", wraplength=350)
         self.labelA.pack()
 
     def open_file(self):
@@ -66,15 +72,8 @@ class ObfuscationApp(tk.Tk):
         # Open and return file path
         self.file_path = filedialog.askopenfilename(title="Select A File",
                                                     filetypes=filetypes)
-        # if self.file_path:
-        #     image = Image.open(self.file_path)
-
-        #     #canvas = Canvas(self, width=100, height=100, bg="grey")
-        #     # canvas.pack()
-        #     print(image)
-
-        #     image_tk = ImageTk.PhotoImage(image)
-        #     self.display = Label(image=image_tk).pack()
+        if self.file_path:
+            self.show_file_path()
 
     def obfuscation_options(self):
         # Option of blur or pixelate
@@ -115,6 +114,18 @@ class ObfuscationApp(tk.Tk):
 
     def show_file_path(self):
         self.labelA['text'] = "Filepath: " + self.file_path
+        
+        im = Image.open(self.file_path) #.resize((450, 350))
+        im.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
+        tkimage = ImageTk.PhotoImage(im)
+        if self.thumbnail:
+            self.thumbnail.destroy()
+        self.thumbnail=Label(self.fileFrame, image = tkimage)
+        self.thumbnail.image = tkimage
+        self.thumbnail.configure(image = tkimage)
+        self.thumbnail.pack()
+        
+    
 
     def get_file_path(self):
         return self.file_path
