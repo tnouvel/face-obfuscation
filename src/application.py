@@ -43,9 +43,9 @@ class ObfuscationApp(tk.Tk):
         self.button.pack()
 
     def create_window(self):
-        self.title('Obfuscation Options')
-        self.geometry('500x300')
-        self.minsize(500, 300)
+        self.title('Scator')
+        self.geometry('600x500')
+        self.minsize(600, 500)
         icon_path = join(dirname(__file__),
                          "ui/images/window_icon.png")
         self.tk.call('wm', 'iconphoto', self._w, tk.PhotoImage(file=icon_path))
@@ -54,8 +54,6 @@ class ObfuscationApp(tk.Tk):
         self.fileFrame = Frame(self)
         self.fileFrame.pack()
         # Creating a button to search the file
-        # b1 = Button(self.fileFrame, text="Open File", style='Open.TButton', command=lambda: [
-        #             self.open_file(), self.show_file_path()])
         b1 = Button(self.fileFrame, text="Open File", style='Open.TButton', command=self.open_file)
         b1.pack(pady=(25, 0))
         # Display file path
@@ -97,9 +95,6 @@ class ObfuscationApp(tk.Tk):
     def select_option(self, value):
         self.choice = value
 
-    # def save_value(self):
-        #self.cb_save = self.cb.get()
-
     def get_save_output(self):
         return self.cb_save.get()
 
@@ -115,7 +110,7 @@ class ObfuscationApp(tk.Tk):
     def show_file_path(self):
         self.labelA['text'] = "Filepath: " + self.file_path
         
-        im = Image.open(self.file_path) #.resize((450, 350))
+        im = Image.open(self.file_path)
         im.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
         tkimage = ImageTk.PhotoImage(im)
         if self.thumbnail:
