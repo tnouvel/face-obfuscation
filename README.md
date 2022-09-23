@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Facial recognition is a concept first pioneered in the 1960s . Woody
+Facial recognition is a concept first pioneered in the 1960s. Woody
 Bledsoe, Helen Chan Wolf and Charles Bisson attempted to detect
 human faces with computers, however they were severely limited
 by the technology at the times [1]. Since then, the technology has
