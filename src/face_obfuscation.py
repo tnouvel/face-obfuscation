@@ -17,6 +17,7 @@ def main(argv):
     obf_app = ObfuscationApp()
     obf_app.mainloop()
     file_path = obf_app.get_file_path()
+    file_ext = os.path.splitext(file_path)[1]
     option = obf_app.get_choice()
     factor = obf_app.get_factor()
     save = obf_app.get_save_output()
@@ -30,7 +31,7 @@ def main(argv):
     model = cv2.dnn.readNetFromCaffe(proto_path, model_path)
 
     # Image, Video, or unsupported file type separation
-    if os.path.splitext(file_path)[1] == ".jpg":
+    if file_ext == ".jpg" or file_ext == ".png":
 
         img = cv2.imread(file_path)
 
@@ -48,7 +49,7 @@ def main(argv):
 
         if save:
             base = os.path.basename(file_path)
-            out_file = "src/output/" + os.path.splitext(base)[0] + "_obf.jpg"
+            out_file = "src/output/" + os.path.splitext(base)[0] + "_obf" + file_ext
             cv2.imwrite(out_file, img)
 
         else:

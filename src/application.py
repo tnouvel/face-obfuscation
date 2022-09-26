@@ -17,6 +17,7 @@ class ObfuscationApp(tk.Tk):
 
         self.choice = ''
         self.file_path = ''
+        self.file_ext = ''
         self.factor = 0
         self.thumbnail = None
 
@@ -65,11 +66,13 @@ class ObfuscationApp(tk.Tk):
         filetypes = (
             ('All files', '*.*'),
             ('mp4 files', '*.mp4'),
-            ('jpg files', '*.jpg')
+            ('jpg files', '*.jpg'),
+            ('png files', '*.png')
         )
         # Open and return file path
         self.file_path = filedialog.askopenfilename(title="Select A File",
                                                     filetypes=filetypes)
+        self.file_ext = os.path.splitext(self.file_path)[1]
         if self.file_path:
             self.show_file_path()
 
@@ -112,7 +115,7 @@ class ObfuscationApp(tk.Tk):
         
         if self.thumbnail: #This makes sure the photo changes
             self.thumbnail.destroy()
-        if os.path.splitext(self.file_path)[1] == ".jpg":
+        if self.file_ext == ".jpg" or self.file_ext == '.png':
             img = Image.open(self.file_path)
             img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
             imgtk = ImageTk.PhotoImage(img)
@@ -120,7 +123,7 @@ class ObfuscationApp(tk.Tk):
             self.thumbnail.image = imgtk
             self.thumbnail.configure(image = imgtk)
             self.thumbnail.pack()
-        elif os.path.splitext(self.file_path)[1] == ".mp4":
+        elif self.file_ext == ".mp4":
             # https://flynnsforge.com/how-to-display-video-from-cv2-in-tkinter-python-3/
             vid = cv2.VideoCapture(self.file_path)
             while True: #Try to figure out way to loop video
