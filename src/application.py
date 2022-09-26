@@ -110,16 +110,39 @@ class ObfuscationApp(tk.Tk):
     def show_file_path(self):
         self.labelA['text'] = "Filepath: " + self.file_path
         
-        if self.thumbnail:
+        if self.thumbnail: #This makes sure the photo changes
             self.thumbnail.destroy()
         if os.path.splitext(self.file_path)[1] == ".jpg":
-            im = Image.open(self.file_path)
-            im.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
-            tkimage = ImageTk.PhotoImage(im)
-            self.thumbnail=Label(self.fileFrame, image = tkimage)
-            self.thumbnail.image = tkimage
-            self.thumbnail.configure(image = tkimage)
+            img = Image.open(self.file_path)
+            img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
+            imgtk = ImageTk.PhotoImage(img)
+            self.thumbnail=Label(self.fileFrame, image = imgtk)
+            self.thumbnail.image = imgtk
+            self.thumbnail.configure(image = imgtk)
             self.thumbnail.pack()
+        elif os.path.splitext(self.file_path)[1] == ".mp4":
+            # https://flynnsforge.com/how-to-display-video-from-cv2-in-tkinter-python-3/
+            vid = cv2.VideoCapture(self.file_path)
+            while True: #Try to figure out way to loop video
+                ret, frame = vid.read() #Reads the video
+                if self.thumbnail: #Destroy per frame
+                    self.thumbnail.destroy()
+
+                if not ret: #unnecessary? makes vid.release() mad without it
+                    break
+                #Converting the video for Tkinter
+                cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+                img = Image.fromarray(cv2image)
+                #Ensure it is within frame
+                img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
+                imgtk = ImageTk.PhotoImage(image=img)
+                self.thumbnail=Label(self.fileFrame, image = imgtk)
+                #Setting the image on the label
+                self.thumbnail.config(image=imgtk)
+                self.thumbnail.pack()
+                self.update() #Updates the Tkinter window
+            vid.release()
+
         
     
 
