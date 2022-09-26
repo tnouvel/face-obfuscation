@@ -17,7 +17,7 @@ def main(argv):
     obf_app = ObfuscationApp()
     obf_app.mainloop()
     file_path = obf_app.get_file_path()
-    file_ext = os.path.splitext(file_path)[1]
+    file_ext = obf_app.get_file_ext()
     option = obf_app.get_choice()
     factor = obf_app.get_factor()
     save = obf_app.get_save_output()

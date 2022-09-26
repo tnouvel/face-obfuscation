@@ -64,10 +64,9 @@ class ObfuscationApp(tk.Tk):
     def open_file(self):
 
         filetypes = (
-            ('All files', '*.*'),
-            ('mp4 files', '*.mp4'),
-            ('jpg files', '*.jpg'),
-            ('png files', '*.png')
+            ('Compatible Files', '.mp4 .jpg .png'),
+            ('Video Files', '*.mp4'),
+            ('Image Files', '.jpg .png')
         )
         # Open and return file path
         self.file_path = filedialog.askopenfilename(title="Select A File",
@@ -115,6 +114,7 @@ class ObfuscationApp(tk.Tk):
         
         if self.thumbnail: #This makes sure the photo changes
             self.thumbnail.destroy()
+
         if self.file_ext == ".jpg" or self.file_ext == '.png':
             img = Image.open(self.file_path)
             img.thumbnail(IMAGE_SIZE, Image.ANTIALIAS)
@@ -123,6 +123,7 @@ class ObfuscationApp(tk.Tk):
             self.thumbnail.image = imgtk
             self.thumbnail.configure(image = imgtk)
             self.thumbnail.pack()
+
         elif self.file_ext == ".mp4":
             # https://flynnsforge.com/how-to-display-video-from-cv2-in-tkinter-python-3/
             vid = cv2.VideoCapture(self.file_path)
@@ -133,6 +134,7 @@ class ObfuscationApp(tk.Tk):
 
                 if not ret: #unnecessary? makes vid.release() mad without it
                     break
+
                 #Converting the video for Tkinter
                 cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
                 img = Image.fromarray(cv2image)
@@ -146,12 +148,13 @@ class ObfuscationApp(tk.Tk):
                 self.update() #Updates the Tkinter window
             vid.release()
 
-        
-    
 
     def get_file_path(self):
         return self.file_path
 
+    def get_file_ext(self):
+        return self.file_ext
+        
 # https://stackoverflow.com/questions/35180764/opencv-python-image-too-big-to-display
 
 
