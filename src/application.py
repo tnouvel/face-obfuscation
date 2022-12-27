@@ -37,6 +37,7 @@ class ObfuscationApp(tk.Tk):
 
     def create_file_window(self):
         self.open_file_button()
+        self.live_button()
         self.obfuscation_options()
 
         # Save output
@@ -62,9 +63,23 @@ class ObfuscationApp(tk.Tk):
         # Creating a button to search the file
         b1 = Button(self.fileFrame, text="Open File", style='Open.TButton', command=self.open_file)
         b1.pack(pady=(25, 0))
+        
         # Display file path
         self.labelA = tk.Label(self.fileFrame, text="", wraplength=350)
         self.labelA.pack()
+
+    def live_button(self):
+        b2 = Button(self.fileFrame, text="Live",  command=lambda: [self.clear_file(), self.set_live()])
+        b2.pack(pady=(0, 0))
+    
+    def set_live(self):
+        self.file_ext = 0
+
+    def clear_file(self):
+        self.labelA['text'] = "Live option selected. Please choose your settings then click confirm."
+
+        if self.thumbnail:
+            self.thumbnail.destroy()
 
     def open_file(self):
 
@@ -79,40 +94,6 @@ class ObfuscationApp(tk.Tk):
         self.file_ext = os.path.splitext(self.file_path)[1]
         if self.file_path:
             self.show_file_path()
-
-    def obfuscation_options(self):
-        # Option of blur or pixelate
-        self.method_label = Label(self, text='Choose type of obfuscation:')
-        self.method_label.pack()
-        self.options_list = ["Blur", "Pixelate"]
-        self.option = StringVar(self)
-        self.option.set("Select a method")
-        self.menu = OptionMenu(self, self.option, *self.options_list,
-                               command=self.select_option)
-        self.menu.pack()
-
-        # Factor of obfuscation (level of blurring or pixelation)
-        self.factor_label = Label(
-            self, text='Choose a factor for obfuscation:')
-        self.factor_label.pack()
-        self.entry = Entry(self, width=35)
-        self.entry.focus_set()
-        self.entry.pack()
-
-    def select_option(self, value):
-        self.choice = value
-
-    def get_save_output(self):
-        return self.cb_save.get()
-
-    def get_choice(self):
-        return self.choice
-
-    def get_value(self):
-        self.factor = self.entry.get()
-
-    def get_factor(self):
-        return int(self.factor)
 
     def show_file_path(self):
         self.labelA['text'] = "Filepath: " + self.file_path
@@ -154,6 +135,41 @@ class ObfuscationApp(tk.Tk):
             vid.release()
 
 
+    def obfuscation_options(self):
+        # Option of blur or pixelate
+        self.method_label = Label(self, text='Choose type of obfuscation:')
+        self.method_label.pack()
+        self.options_list = ["Blur", "Pixelate"]
+        self.option = StringVar(self)
+        self.option.set("Select a method")
+        self.menu = OptionMenu(self, self.option, *self.options_list,
+                               command=self.select_option)
+        self.menu.pack()
+
+        # Factor of obfuscation (level of blurring or pixelation)
+        self.factor_label = Label(
+            self, text='Choose a factor for obfuscation:')
+        self.factor_label.pack()
+        self.entry = Entry(self, width=35)
+        self.entry.focus_set()
+        self.entry.pack()
+
+    def select_option(self, value):
+        self.choice = value
+
+    def get_save_output(self):
+        return self.cb_save.get()
+
+    def get_choice(self):
+        return self.choice
+
+    def get_value(self):
+        self.factor = self.entry.get()
+
+    def get_factor(self):
+        return int(self.factor)
+
+    
     def get_file_path(self):
         return self.file_path
 

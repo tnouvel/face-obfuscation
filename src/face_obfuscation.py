@@ -60,10 +60,14 @@ def main(argv):
             cv2.waitKey()
             cv2.destroyAllWindows()
 
-    elif os.path.splitext(file_path)[1] == ".mp4":
-
-        cap = cv2.VideoCapture(file_path)
-        #cap = cv2.VideoCapture(0)
+    elif os.path.splitext(file_path)[1] == ".mp4" or file_ext == 0:
+        
+        if(file_ext == 0):
+            cap = cv2.VideoCapture(0)
+            file_path = "live.mp4"
+        else:
+            cap = cv2.VideoCapture(file_path)
+       
 
         if save:
             # Get video information
@@ -72,7 +76,7 @@ def main(argv):
             fps = cap.get(cv2.CAP_PROP_FPS)
             # create new file name
             base = os.path.basename(file_path)
-            out_file = "output/" + os.path.splitext(base)[0] + "_obf.mp4"
+            out_file = "src/output/" + os.path.splitext(base)[0] + "_obf.mp4"
             # set up VideoWriter
             fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
             out = cv2.VideoWriter(out_file, fourcc, fps, size, True)
@@ -96,7 +100,7 @@ def main(argv):
 
             # show blurring in window
             cv2.imshow("img", img)
-            if cv2.waitKey(1) == ord("q"):
+            if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
 
         cv2.destroyAllWindows()
