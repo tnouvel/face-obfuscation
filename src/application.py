@@ -15,6 +15,7 @@ class ObfuscationApp(tk.Tk):
         super().__init__()
         self.create_widgets()
 
+
         self.choice = ''
         self.file_path = ''
         self.file_ext = ''
@@ -31,6 +32,10 @@ class ObfuscationApp(tk.Tk):
 
     def create_widgets(self):
         self.create_window()
+        self.create_file_window()
+        
+
+    def create_file_window(self):
         self.open_file_button()
         self.obfuscation_options()
 
@@ -156,8 +161,6 @@ class ObfuscationApp(tk.Tk):
         return self.file_ext
         
 # https://stackoverflow.com/questions/35180764/opencv-python-image-too-big-to-display
-
-
 def ResizeWithAspectRatio(image, width=None, height=None, inter=cv2.INTER_AREA):
     dim = None
     (h, w) = image.shape[:2]
